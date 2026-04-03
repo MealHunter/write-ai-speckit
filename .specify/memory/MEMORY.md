@@ -1,0 +1,1 @@
+- [Constitution v1.0.0](constitution.md) — Project governance: code quality, testing, UX consistency, performance, observability
