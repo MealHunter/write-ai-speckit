@@ -20,10 +20,10 @@ description: "Task list template for feature implementation"
 
 ## Path Conventions
 
-- **Single project**: `src/`, `tests/` at repository root
-- **Web app**: `backend/src/`, `frontend/src/`
-- **Mobile**: `api/src/`, `ios/src/` or `android/src/`
-- Paths shown below assume single project - adjust based on plan.md structure
+- **Next.js Web App**: `app/api/` (backend routes), `app/components/` (frontend), `app/` (pages)
+- **Tests**: `__tests__/` or `.test.ts` files colocated with source
+- **Styling**: Tailwind CSS classes in components; no CSS modules or inline styles
+- Paths shown below assume Next.js structure - adjust based on plan.md structure
 
 <!-- 
   ============================================================================
@@ -48,9 +48,9 @@ description: "Task list template for feature implementation"
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create project structure per implementation plan
-- [ ] T002 Initialize [language] project with [framework] dependencies
-- [ ] T003 [P] Configure linting and formatting tools
+- [ ] T001 Create project structure per implementation plan (app/, app/api/, app/components/)
+- [ ] T002 Initialize Next.js project with TypeScript, Tailwind CSS, shadcn/ui dependencies
+- [ ] T003 [P] Configure ESLint, Prettier, and pre-commit hooks
 
 ---
 
@@ -63,11 +63,11 @@ description: "Task list template for feature implementation"
 Examples of foundational tasks (adjust based on your project):
 
 - [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
+- [ ] T005 [P] Implement authentication/authorization in Next.js middleware
+- [ ] T006 [P] Setup API route structure in app/api/ with request/response contracts
+- [ ] T007 Create base service layer for business logic (separate from API routes)
+- [ ] T008 Configure error handling and structured logging infrastructure
+- [ ] T009 Setup environment configuration management (.env.local, .env.production)
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -88,12 +88,13 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Implementation for User Story 1
 
-- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
-- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
-- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
-- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T016 [US1] Add validation and error handling
-- [ ] T017 [US1] Add logging for user story 1 operations
+- [ ] T012 [P] [US1] Create [Entity1] types in lib/types/[entity1].ts
+- [ ] T013 [P] [US1] Create [Entity2] types in lib/types/[entity2].ts
+- [ ] T014 [US1] Implement [Service] in lib/services/[service].ts (depends on T012, T013)
+- [ ] T015 [US1] Implement API endpoint in app/api/[route]/route.ts
+- [ ] T016 [US1] Create React components in app/components/[feature]/ using shadcn/ui
+- [ ] T017 [US1] Add validation and error handling with proper HTTP status codes
+- [ ] T018 [US1] Add structured logging for user story 1 operations
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -112,10 +113,11 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Implementation for User Story 2
 
-- [ ] T020 [P] [US2] Create [Entity] model in src/models/[entity].py
-- [ ] T021 [US2] Implement [Service] in src/services/[service].py
-- [ ] T022 [US2] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T023 [US2] Integrate with User Story 1 components (if needed)
+- [ ] T020 [P] [US2] Create [Entity] types in lib/types/[entity].ts
+- [ ] T021 [US2] Implement [Service] in lib/services/[service].ts
+- [ ] T022 [US2] Implement API endpoint in app/api/[route]/route.ts
+- [ ] T023 [US2] Create React components in app/components/[feature]/ using shadcn/ui
+- [ ] T024 [US2] Integrate with User Story 1 components (if needed)
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -134,9 +136,10 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Implementation for User Story 3
 
-- [ ] T026 [P] [US3] Create [Entity] model in src/models/[entity].py
-- [ ] T027 [US3] Implement [Service] in src/services/[service].py
-- [ ] T028 [US3] Implement [endpoint/feature] in src/[location]/[file].py
+- [ ] T026 [P] [US3] Create [Entity] types in lib/types/[entity].ts
+- [ ] T027 [US3] Implement [Service] in lib/services/[service].ts
+- [ ] T028 [US3] Implement API endpoint in app/api/[route]/route.ts
+- [ ] T029 [US3] Create React components in app/components/[feature]/ using shadcn/ui
 
 **Checkpoint**: All user stories should now be independently functional
 

@@ -1,1 +1,1 @@
-- [Constitution v1.0.0](constitution.md) — Project governance: code quality, testing, UX consistency, performance, observability
+- [Constitution v1.1.0](constitution.md) — Next.js + Tailwind + shadcn/ui stack; API Routes backend, component-driven frontend
