@@ -26,11 +26,11 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create project structure per implementation plan (app/, app/api/, app/components/, app/lib/)
-- [ ] T002 Initialize Next.js project with TypeScript, Tailwind CSS 4+, shadcn/ui dependencies
+- [x] T001 Create project structure per implementation plan (app/, app/api/, app/components/, app/lib/)
+- [x] T002 Initialize Next.js project with TypeScript, Tailwind CSS 4+, shadcn/ui dependencies
 - [ ] T003 [P] Configure ESLint, Prettier, and pre-commit hooks
 - [ ] T004 [P] Setup environment configuration (.env.local, .env.production)
-- [ ] T005 Create TypeScript types in app/lib/types/diary.ts (DiaryRequest, DiaryContent, DiaryError, GenerateDiaryResponse)
+- [x] T005 Create TypeScript types in app/lib/types/diary.ts (DiaryRequest, DiaryContent, DiaryError, GenerateDiaryResponse)
 
 ---
 
@@ -40,11 +40,11 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T006 Setup OpenAI SDK client in app/lib/llm/client.ts with Aliyun DashScope configuration
-- [ ] T007 Create LLM prompt engineering module in app/lib/llm/diaryPrompt.ts with system prompt and user message templates
-- [ ] T008 Implement API route POST /api/generate-diary/route.ts with input validation, LLM call, error handling
+- [x] T006 Setup OpenAI SDK client in app/lib/llm/client.ts with Aliyun DashScope configuration
+- [x] T007 Create LLM prompt engineering module in app/lib/llm/diaryPrompt.ts with system prompt and user message templates
+- [x] T008 Implement API route POST /api/generate-diary/route.ts with input validation, LLM call, error handling
 - [ ] T009 [P] Setup Markdown rendering library (react-markdown, remark-gfm) and configure Tailwind prose styling
-- [ ] T010 [P] Create utility functions in app/lib/utils.ts (cn for className merging, error formatting)
+- [x] T010 [P] Create utility functions in app/lib/utils.ts (cn for className merging, error formatting)
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -58,9 +58,9 @@
 
 ### Implementation for User Story 1
 
-- [ ] T011 [P] [US1] Create DiaryForm component in app/components/DiaryForm.tsx (textarea input, submit button, input validation UI)
-- [ ] T012 [P] [US1] Create LoadingState component in app/components/LoadingState.tsx (spinner, loading message)
-- [ ] T013 [P] [US1] Create ErrorMessage component in app/components/ErrorMessage.tsx (error display with user-friendly messages)
+- [x] T011 [P] [US1] Create DiaryForm component in app/components/DiaryForm.tsx (textarea input, submit button, input validation UI)
+- [x] T012 [P] [US1] Create LoadingState component in app/components/LoadingState.tsx (spinner, loading message)
+- [x] T013 [P] [US1] Create ErrorMessage component in app/components/ErrorMessage.tsx (error display with user-friendly messages)
 - [ ] T014 [US1] Implement form submission logic in DiaryForm.tsx (call /api/generate-diary, handle response/error states)
 - [ ] T015 [US1] Add input validation in DiaryForm.tsx (empty check, 500 character limit, show validation errors)
 - [ ] T016 [US1] Implement loading state display during API call (show spinner, disable submit button)
@@ -78,7 +78,7 @@
 
 ### Implementation for User Story 2
 
-- [ ] T018 [P] [US2] Create DiaryDisplay component in app/components/DiaryDisplay.tsx (react-markdown with Tailwind prose styling)
+- [x] T018 [P] [US2] Create DiaryDisplay component in app/components/DiaryDisplay.tsx (react-markdown with Tailwind prose styling)
 - [ ] T019 [P] [US2] Create responsive layout component in app/components/DiaryContainer.tsx (centered, max-width, padding)
 - [ ] T020 [US2] Integrate DiaryDisplay into homepage (show generated content after successful API call)
 - [ ] T021 [US2] Implement responsive design for mobile (test on mobile viewport, adjust prose sizing)
@@ -93,10 +93,10 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T024 [P] Create homepage layout in app/page.tsx (header, form section, display section, footer)
-- [ ] T025 [P] Create root layout in app/layout.tsx (metadata, global styles, dark mode support)
+- [x] T024 [P] Create homepage layout in app/page.tsx (header, form section, display section, footer)
+- [x] T025 [P] Create root layout in app/layout.tsx (metadata, global styles, dark mode support)
 - [ ] T026 [P] Add Tailwind CSS configuration for prose styling and dark mode
-- [ ] T027 [P] Setup environment variables documentation in .env.example
+- [x] T027 [P] Setup environment variables documentation in .env.example
 - [ ] T028 Add accessibility improvements (ARIA labels, keyboard navigation, color contrast)
 - [ ] T029 Test cross-browser compatibility (Chrome, Safari, Firefox on desktop and mobile)
 - [ ] T030 Performance optimization (lazy loading, code splitting, image optimization if needed)
