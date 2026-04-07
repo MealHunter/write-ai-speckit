@@ -38,21 +38,48 @@ npm install
 yarn install
 ```
 
-**Key Dependencies**:
+**Installed Dependencies**:
 - `next@16.2.2` - Framework
 - `react@19.2.4` - UI library
 - `tailwindcss@4` - Styling
 - `shadcn/ui` - Component library
 - `openai@latest` - LLM SDK
 - `react-markdown` - Markdown rendering
+- `remark-gfm` - GitHub Flavored Markdown
+- `clsx` - Conditional classnames
+- `tailwind-merge` - Merge Tailwind classes
+- `@tailwindcss/typography` - Prose styling
 
-### 3. Install shadcn/ui Components
+### 3. Project Structure
 
-```bash
-npx shadcn-ui@latest add button
-npx shadcn-ui@latest add textarea
-npx shadcn-ui@latest add card
-npx shadcn-ui@latest add alert
+```
+app/
+├── api/
+│   └── generate-diary/
+│       └── route.ts              # POST endpoint for diary generation
+├── components/
+│   ├── DiaryForm.tsx             # Input form with validation
+│   ├── DiaryDisplay.tsx          # Markdown content display
+│   ├── LoadingState.tsx          # Loading indicator
+│   └── ErrorMessage.tsx          # Error display
+├── lib/
+│   ├── llm/
+│   │   ├── client.ts             # OpenAI SDK client setup
+│   │   └── diaryPrompt.ts        # Prompt engineering
+│   ├── types/
+│   │   └── diary.ts              # TypeScript types
+│   └── utils.ts                  # Utility functions
+├── page.tsx                      # Homepage
+└── layout.tsx                    # Root layout
+
+__tests__/
+├── api/
+│   └── generate-diary.test.ts
+├── components/
+│   ├── DiaryForm.test.tsx
+│   └── DiaryDisplay.test.tsx
+└── integration/
+    └── diary-flow.test.ts
 ```
 
 ## Running Locally
@@ -74,53 +101,18 @@ npm run build
 npm start
 ```
 
-## Project Structure
-
-```
-app/
-├── api/
-│   └── generate-diary/
-│       └── route.ts              # POST endpoint
-├── components/
-│   ├── DiaryForm.tsx             # Input form
-│   ├── DiaryDisplay.tsx          # Content display
-│   ├── LoadingState.tsx          # Loading indicator
-│   └── ErrorMessage.tsx          # Error display
-├── lib/
-│   ├── llm/
-│   │   ├── client.ts             # OpenAI client setup
-│   │   └── diaryPrompt.ts        # Prompt engineering
-│   └── types/
-│       └── diary.ts              # TypeScript types
-├── page.tsx                      # Homepage
-└── layout.tsx                    # Root layout
-
-__tests__/
-├── api/
-│   └── generate-diary.test.ts
-├── components/
-│   ├── DiaryForm.test.tsx
-│   └── DiaryDisplay.test.tsx
-└── integration/
-    └── diary-flow.test.ts
-```
-
 ## Testing
 
-### Run Unit Tests
+### Run Linting
 
 ```bash
-npm run test
-# or
-yarn test
+npm run lint
 ```
 
-### Run E2E Tests
+### Run Type Checking
 
 ```bash
-npm run test:e2e
-# or
-yarn test:e2e
+npx tsc --noEmit
 ```
 
 ### Manual Testing
@@ -133,12 +125,14 @@ yarn test:e2e
 
 **Test Cases**:
 - ✅ Valid keyword → generates diary
-- ✅ Valid description (500 chars) → generates diary
-- ✅ Empty input → shows error
-- ✅ Input > 500 chars → shows error
+- ✅ Valid description (up to 500 chars) → generates diary
+- ✅ Empty input → shows error "请输入至少一个字符"
+- ✅ Input > 500 chars → shows error "输入内容不能超过500字符"
 - ✅ Loading state displays during generation
 - ✅ Error message displays on failure
 - ✅ Works on mobile and desktop
+- ✅ Dark mode toggle works
+- ✅ Keyboard navigation works (Tab, Enter)
 
 ## API Testing
 
@@ -227,10 +221,10 @@ curl -X POST http://localhost:3000/api/generate-diary \
 npm run lint
 
 # Format code
-npm run format
+npx prettier --write .
 
 # Type check
-npm run type-check
+npx tsc --noEmit
 ```
 
 ### Deployment
@@ -245,6 +239,56 @@ npm start
 # Deploy to Vercel (recommended)
 vercel deploy
 ```
+
+## Architecture Overview
+
+```
+User Input (textarea)
+    ↓
+DiaryForm Component (validation, submission)
+    ↓
+POST /api/generate-diary
+    ↓
+OpenAI SDK Client
+    ↓
+Qwen Model (Aliyun DashScope)
+    ↓
+LLM Response (Markdown format)
+    ↓
+DiaryDisplay Component (react-markdown)
+    ↓
+Rendered Diary Entry (Tailwind prose styling)
+```
+
+## Key Implementation Details
+
+### LLM Prompt Engineering
+
+The system prompt is carefully crafted to generate natural, human-like diary entries:
+- Emphasizes first-person perspective
+- Avoids AI artifacts (perfect grammar, repetitive phrases)
+- Encourages sensory details and emotions
+- Uses Markdown formatting
+
+See `app/lib/llm/diaryPrompt.ts` for the complete prompt.
+
+### Error Handling
+
+All errors return user-friendly Chinese messages:
+- `EMPTY_INPUT`: "请输入至少一个字符"
+- `INPUT_TOO_LONG`: "输入内容不能超过500字符"
+- `API_TIMEOUT`: "生成超时，请稍后重试"
+- `API_ERROR`: "服务暂时不可用，请稍后重试"
+- `INVALID_RESPONSE`: "未能生成内容，请尝试其他关键词"
+
+### Accessibility Features
+
+- ARIA labels for form inputs
+- Alert roles for error messages
+- Live regions for loading states
+- Keyboard navigation support
+- Color contrast compliance
+- Focus indicators
 
 ## Next Steps
 
