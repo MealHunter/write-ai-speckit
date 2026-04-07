@@ -10,7 +10,11 @@ interface ErrorMessageProps {
 
 export function ErrorMessage({ error }: ErrorMessageProps) {
   return (
-    <div className="rounded-lg bg-red-50 dark:bg-red-950 p-4 border border-red-200 dark:border-red-800">
+    <div
+      className="rounded-lg bg-red-50 dark:bg-red-950 p-4 border border-red-200 dark:border-red-800"
+      role="alert"
+      aria-live="polite"
+    >
       <div className="flex">
         <div className="flex-shrink-0">
           <svg
