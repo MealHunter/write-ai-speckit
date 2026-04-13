@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
   try {
     // Parse request body
     const body: GenerateRequestBody = await request.json();
-    const { articleId, regenerate = false } = body;
+    const { articleId, regenerate = false, wordLimit = 1000 } = body;
 
     // Validate articleId
     if (!articleId || typeof articleId !== 'string') {
@@ -90,10 +90,12 @@ export async function POST(request: NextRequest) {
       if (regenerate) {
         rewriteArticle = await regenerateArticle(article, {
           timeout: 60000,
+          wordLimit,
         });
       } else {
         rewriteArticle = await generateArticle(article, {
           timeout: 60000,
+          wordLimit,
         });
       }
     } catch (error: any) {

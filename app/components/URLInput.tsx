@@ -12,12 +12,16 @@ interface URLInputProps {
   onSubmit: (url: string) => void;
   disabled?: boolean;
   placeholder?: string;
+  wordLimit?: number;
+  onWordLimitChange?: (limit: number) => void;
 }
 
 export function URLInput({
   onSubmit,
   disabled = false,
   placeholder = 'Enter article URL (WeChat, Zhihu, or news website)',
+  wordLimit = 1000,
+  onWordLimitChange,
 }: URLInputProps) {
   const [url, setUrl] = useState('');
   const [error, setError] = useState('');
@@ -25,6 +29,13 @@ export function URLInput({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(e.target.value);
     setError('');
+  };
+
+  const handleWordLimitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
+    if (!isNaN(value) && value > 0) {
+      onWordLimitChange?.(value);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -45,7 +56,7 @@ export function URLInput({
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
-      <div className="space-y-2">
+      <div className="space-y-4">
         <div className="flex gap-2">
           <input
             type="url"
@@ -63,6 +74,25 @@ export function URLInput({
             Parse & Generate
           </button>
         </div>
+
+        {/* Word Limit Control */}
+        <div className="flex items-center gap-3">
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            Article Word Limit:
+          </label>
+          <input
+            type="number"
+            value={wordLimit}
+            onChange={handleWordLimitChange}
+            disabled={disabled}
+            min="100"
+            max="5000"
+            step="100"
+            className="w-24 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          />
+          <span className="text-sm text-gray-600 dark:text-gray-400">words</span>
+        </div>
+
         {error && (
           <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
         )}

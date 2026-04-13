@@ -9,16 +9,14 @@ import { useState } from 'react';
 import { URLInput } from '@/app/components/URLInput';
 import { LoadingState } from '@/app/components/NewsLoadingState';
 import { OriginalContent } from '@/app/components/OriginalContent';
-import { ImageGallery } from '@/app/components/ImageGallery';
 import { RewriteArticle } from '@/app/components/RewriteArticle';
 import { ErrorMessage } from '@/app/components/NewsErrorMessage';
-import { ParsedArticle, Image, RewriteArticle as RewriteArticleType } from '@/app/lib/types/news';
+import { ParsedArticle, RewriteArticle as RewriteArticleType } from '@/app/lib/types/news';
 
 type PageState = 'idle' | 'loading' | 'success' | 'error';
 
 interface PageData {
   article: ParsedArticle | null;
-  images: Image[];
   rewriteArticle: RewriteArticleType | null;
 }
 
@@ -26,11 +24,11 @@ export default function NewsRewritePage() {
   const [state, setState] = useState<PageState>('idle');
   const [data, setData] = useState<PageData>({
     article: null,
-    images: [],
     rewriteArticle: null,
   });
   const [error, setError] = useState<string>('');
   const [isRegenerating, setIsRegenerating] = useState(false);
+  const [wordLimit, setWordLimit] = useState<number>(1000);
 
   const handleParseAndGenerate = async (url: string) => {
     setState('loading');
@@ -50,13 +48,13 @@ export default function NewsRewritePage() {
       }
 
       const parseData = await parseResponse.json();
-      const { article, images } = parseData.data;
+      const { article } = parseData.data;
 
       // Step 2: Generate article
       const generateResponse = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ articleId: article.id }),
+        body: JSON.stringify({ articleId: article.id, wordLimit }),
       });
 
       if (!generateResponse.ok) {
@@ -69,7 +67,6 @@ export default function NewsRewritePage() {
 
       setData({
         article,
-        images,
         rewriteArticle,
       });
 
@@ -93,6 +90,7 @@ export default function NewsRewritePage() {
         body: JSON.stringify({
           articleId: data.article.id,
           regenerate: true,
+          wordLimit,
         }),
       });
 
@@ -120,7 +118,6 @@ export default function NewsRewritePage() {
     setState('idle');
     setData({
       article: null,
-      images: [],
       rewriteArticle: null,
     });
     setError('');
@@ -147,6 +144,8 @@ export default function NewsRewritePage() {
           <URLInput
             onSubmit={handleParseAndGenerate}
             disabled={state === 'loading'}
+            wordLimit={wordLimit}
+            onWordLimitChange={setWordLimit}
           />
         </div>
 
@@ -170,9 +169,6 @@ export default function NewsRewritePage() {
           <div className="space-y-8">
             {/* Original Content */}
             <OriginalContent article={data.article} />
-
-            {/* Images */}
-            <ImageGallery images={data.images} />
 
             {/* Rewritten Article */}
             <RewriteArticle

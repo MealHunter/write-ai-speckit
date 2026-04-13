@@ -17,6 +17,7 @@ export interface GenerationOptions {
   temperature?: number;
   maxTokens?: number;
   timeout?: number;
+  wordLimit?: number;
 }
 
 /**
@@ -29,11 +30,12 @@ export async function generateArticle(
   const startTime = Date.now();
 
   try {
-    // Create prompt
+    // Create prompt with word limit
     const userPrompt = createParsePrompt(
       article.title,
       article.body,
-      article.platform
+      article.platform,
+      options?.wordLimit ?? 1000
     );
 
     // Call LLM

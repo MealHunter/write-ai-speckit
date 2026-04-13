@@ -125,6 +125,7 @@ export interface GenerateRequestBody {
   articleId: string;
   regenerate?: boolean;
   stream?: boolean;
+  wordLimit?: number;
 }
 
 export interface GenerateResponse {
