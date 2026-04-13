@@ -98,6 +98,11 @@ export async function POST(request: NextRequest) {
       }
     } catch (error: any) {
       const errorMessage = error?.message || 'Generation failed';
+      console.error('LLM Generation Error:', {
+        error: error,
+        message: errorMessage,
+        stack: error?.stack,
+      });
 
       if (errorMessage.includes('timeout')) {
         logGenerateError(
